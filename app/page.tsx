@@ -1,4 +1,5 @@
 import { Cormorant_Garamond } from "next/font/google";
+import Image from "next/image";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -7,86 +8,96 @@ const cormorant = Cormorant_Garamond({
 
 const projects = [
   {
-    category: "Cafe",
-    title: "Warm Minimal Cafe",
-    description: "따뜻한 질감과 여백을 살린 카페 공간 디자인",
+    category: "Retail",
+    title: "MUSINSA",
+    description: "브랜드의 무드와 동선을 구조적으로 담아낸 리테일 공간.",
+    image: "/images/project-musinsa-04.png",
   },
   {
-    category: "Office",
-    title: "Creative Office",
-    description: "브랜드의 일하는 방식을 담은 오피스 인테리어",
+    category: "Commercial",
+    title: "KOMU",
+    description: "차분한 톤과 절제된 소재감이 중심이 되는 상업 공간.",
+    image: "/images/project-KOMU-02.png",
   },
   {
-    category: "Residential",
-    title: "Calm Living Space",
-    description: "일상의 온도를 낮추는 주거 공간 리모델링",
+    category: "Brand",
+    title: "Verish",
+    description: "공간의 첫인상을 만드는 브랜드 비주얼과 아이덴티티.",
+    image: "/images/project-Verish-07.png",
   },
 ];
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-[#f4f1ec] text-[#171717]">
+    <main className="min-h-screen bg-[#0b0b0b] text-white">
       <header className="fixed left-0 top-0 z-50 flex w-full items-center justify-between px-6 py-5 mix-blend-difference md:px-12">
         <div
-          className={`${cormorant.className} text-4xl font-medium tracking-[0.22em] text-white md:text-5xl`}
+          className={`${cormorant.className} text-3xl tracking-[0.2em] text-white`}
         >
-          Studio Tama
+          <a href="/">Studio Tama</a>
         </div>
 
         <nav className="hidden gap-8 text-xs font-medium tracking-[0.25em] text-white md:flex">
-          <a href="#about">ABOUT</a>
-          <a href="#projects">PROJECTS</a>
-          <a href="#service">SERVICE</a>
-          <a href="#contact">CONTACT</a>
+          <a href="/about">ABOUT</a>
+          <a href="/projects">PROJECTS</a>
+          <a href="/service">SERVICE</a>
+          <a href="/contact">CONTACT</a>
         </nav>
       </header>
 
-      <section className="relative flex min-h-screen items-end overflow-hidden px-6 pb-16 pt-28 md:px-12 md:pb-24">
-        <div className="absolute inset-0 bg-[linear-gradient(120deg,#d9d1c5_0%,#f4f1ec_45%,#9a8f82_100%)]" />
+      <section className="relative min-h-screen bg-[#0b0b0b] text-white">
+        <div className="mx-auto grid min-h-screen max-w-[1600px] grid-cols-1 md:grid-cols-2">
+          <div className="flex flex-col justify-center px-8 py-24 md:px-20">
+            <p className="mb-8 text-sm tracking-[0.4em] text-white/40">
+              INTERIOR DESIGN STUDIO
+            </p>
 
-        <div className="absolute right-[-10%] top-[12%] h-[520px] w-[520px] rounded-full bg-white/25 blur-3xl" />
-        <div className="absolute bottom-[-15%] left-[10%] h-[420px] w-[420px] rounded-full bg-black/10 blur-3xl" />
-
-        <div className="relative z-10 grid w-full gap-10 md:grid-cols-[1.2fr_0.8fr] md:items-end">
-          <div>
             <h1
-              className={`${cormorant.className} max-w-5xl text-[72px] font-light leading-[0.95] tracking-[-0.05em] text-black/90 md:text-[110px] lg:text-[150px]`}
+              className={`${cormorant.className} mb-8 text-[72px] leading-[0.9] tracking-[-0.05em] md:text-[120px]`}
             >
               Designing
               <br />
-              quiet spaces
+              spaces
               <br />
-              with feeling.
+              with mood.
             </h1>
-          </div>
 
-          <div className="max-w-md md:justify-self-end">
-            <p className="mb-8 text-lg leading-8 text-black/70">
-              공간의 분위기, 브랜드의 결, 사용자의 움직임까지 생각하는 실내건축
-              디자인 스튜디오. 빛, 질감, 여백의 균형으로 오래 머물고 싶은 공간을
-              만듭니다.
+            <p className="mb-10 max-w-md text-sm leading-8 text-white/60">
+              공간의 구조와 분위기를 설계합니다. 단순한 인테리어가 아닌 브랜드
+              경험을 만듭니다.
             </p>
 
-            <div className="flex gap-3">
+            <div className="flex gap-4">
               <a
                 href="#projects"
-                className="rounded-full bg-black px-6 py-3 text-sm font-medium text-white transition hover:bg-black/80"
+                className="border border-white/20 px-8 py-4 text-sm tracking-[0.2em] transition hover:bg-white hover:text-black"
               >
-                프로젝트 보기
+                PROJECTS
               </a>
+
               <a
                 href="#contact"
-                className="rounded-full border border-black/30 px-6 py-3 text-sm font-medium transition hover:bg-black hover:text-white"
+                className="border border-white/20 px-8 py-4 text-sm tracking-[0.2em] transition hover:bg-white hover:text-black"
               >
-                문의하기
+                CONTACT
               </a>
             </div>
+          </div>
+
+          <div className="relative h-[100vh]">
+            <Image
+              src="/images/logo_02.png"
+              alt="Studio Tama"
+              fill
+              priority
+              className="object-cover grayscale"
+            />
           </div>
         </div>
       </section>
 
       <section id="about" className="px-6 py-24 md:px-12">
-        <div className="grid gap-10 border-t border-black/20 pt-10 md:grid-cols-[0.4fr_1fr]">
+        <div className="grid gap-10 border-t border-white/20 pt-10 md:grid-cols-[0.4fr_1fr]">
           <p className="text-xs font-medium tracking-[0.35em] text-black/50">
             ABOUT
           </p>
@@ -99,9 +110,9 @@ export default function Home() {
       </section>
 
       <section id="projects" className="px-6 py-24 md:px-12">
-        <div className="mb-10 flex items-end justify-between border-t border-black/20 pt-10">
+        <div className="mb-10 flex items-end justify-between border-t border-white/20 pt-10">
           <div>
-            <p className="mb-4 text-xs font-medium tracking-[0.35em] text-black/50">
+            <p className="mb-4 text-xs font-medium tracking-[0.35em] text-white/50">
               PROJECTS
             </p>
             <h2 className="text-4xl font-light tracking-[-0.05em] md:text-6xl">
@@ -113,19 +124,28 @@ export default function Home() {
         <div className="grid gap-5 md:grid-cols-3">
           {projects.map((project, index) => (
             <article key={project.title} className="group cursor-pointer">
-              <div className="mb-5 flex h-[420px] items-end overflow-hidden bg-[#d6cec1] p-6 transition duration-500 group-hover:scale-[0.98]">
-                <span className="text-[120px] font-light leading-none tracking-[-0.08em] text-black/10">
+              <div className="relative mb-5 h-[520px] overflow-hidden bg-[#1a1a1a]">
+                <Image
+                  src={project.image}
+                  alt={project.title}
+                  fill
+                  className="object-cover grayscale transition duration-700 group-hover:scale-105 group-hover:grayscale-0"
+                />
+
+                <div className="absolute inset-0 bg-white/20" />
+
+                <span className="absolute bottom-6 left-6 text-[96px] font-light leading-none tracking-[-0.08em] text-white/30">
                   0{index + 1}
                 </span>
               </div>
 
-              <p className="mb-2 text-xs font-medium tracking-[0.3em] text-black/40">
+              <p className="mb-2 text-xs font-medium tracking-[0.3em] text-white/40">
                 {project.category}
               </p>
               <h3 className="mb-2 text-2xl font-medium tracking-[-0.03em]">
                 {project.title}
               </h3>
-              <p className="text-sm leading-6 text-black/60">
+              <p className="text-sm leading-6 text-white/60">
                 {project.description}
               </p>
             </article>
@@ -134,7 +154,7 @@ export default function Home() {
       </section>
 
       <section id="service" className="px-6 py-24 md:px-12">
-        <div className="grid gap-10 border-t border-black/20 pt-10 md:grid-cols-[0.4fr_1fr]">
+        <div className="grid gap-10 border-t border-white/20 pt-10 md:grid-cols-[0.4fr_1fr]">
           <p className="text-xs font-medium tracking-[0.35em] text-black/50">
             SERVICE
           </p>
@@ -142,11 +162,11 @@ export default function Home() {
           <div className="grid gap-6 md:grid-cols-3">
             {["Interior Design", "Space Branding", "Renovation"].map(
               (service) => (
-                <div key={service} className="border-t border-black/20 pt-5">
+                <div key={service} className="border-t border-white/20 pt-5">
                   <h3 className="mb-4 text-2xl font-medium tracking-[-0.03em]">
                     {service}
                   </h3>
-                  <p className="text-sm leading-6 text-black/60">
+                  <p className="text-sm leading-6 text-white/60">
                     기획부터 디자인, 시공 방향 제안까지 공간에 맞는 솔루션을
                     제공합니다.
                   </p>

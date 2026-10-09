@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { projects } from "@/data/projects";
 import { services } from "@/data/site";
+import { asset } from "@/lib/asset";
 import Intro from "./_components/Intro";
 import ProjectCard from "./_components/ProjectCard";
 
@@ -36,7 +37,7 @@ export default function Home() {
 
           <div className="relative min-h-[60vh] border-white/10 md:border-l">
             <Image
-              src="/images/logo_02.png"
+              src={asset("/images/logo_02.png")}
               alt="STUDIO TAMA 로고"
               fill
               preload

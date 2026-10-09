@@ -17,7 +17,9 @@ export const metadata: Metadata = {
 };
 
 // 화면이 그려지기 전에 실행돼서, 인트로를 이미 봤으면 바로 숨깁니다. (Intro.tsx 참고)
-const introScript = `(function(){var d=document.documentElement;if(location.pathname!=="/")return;try{var seen=sessionStorage.getItem("${INTRO_KEY}")==="1";var reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;d.dataset.intro=seen||reduce?"done":"playing"}catch(e){d.dataset.intro="done"}})();`;
+// 홈 주소: 평소에는 "/", GitHub Pages에서는 "/studio-tama-site/"
+const homePath = `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/`;
+const introScript = `(function(){var d=document.documentElement;var p=location.pathname;if(p!=="${homePath}"&&p+"/"!=="${homePath}")return;try{var seen=sessionStorage.getItem("${INTRO_KEY}")==="1";var reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;d.dataset.intro=seen||reduce?"done":"playing"}catch(e){d.dataset.intro="done"}})();`;
 
 export default function RootLayout({
   children,

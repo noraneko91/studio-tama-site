@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { asset } from "@/lib/asset";
 
 // 브랜드 로고 TA(m*)A예요. public/images/logo_02.png(1210×1210)에서 로고 부분만 잘라 보여줘요.
 // 로고 위치: 가로 312~897px, 세로 496~705px (585×209)
@@ -12,7 +13,7 @@ export default function Logo({ className = "" }: { className?: string }) {
       style={{ width: `${585 * scale}em`, height: `${209 * scale}em` }}
     >
       <Image
-        src="/images/logo_02.png"
+        src={asset("/images/logo_02.png")}
         alt="STUDIO TAMA"
         width={1210}
         height={1210}

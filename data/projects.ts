@@ -1,6 +1,8 @@
 // 프로젝트 목록이에요. 여기에 항목을 추가하면 목록 페이지와 상세 페이지가 자동으로 생겨요.
 // slug는 주소에 쓰여요. 예) slug: "verish" → /projects/verish
 
+import { asset } from "@/lib/asset";
+
 export type ProjectImage = {
   src: string;
   width: number;
@@ -23,7 +25,7 @@ export type Project = {
 };
 
 function img(name: string, width: number, height: number): ProjectImage {
-  return { src: `/images/${name}`, width, height };
+  return { src: asset(`/images/${name}`), width, height };
 }
 
 const projectList: Project[] = [

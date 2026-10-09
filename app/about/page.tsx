@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { asset } from "@/lib/asset";
 
 export const metadata: Metadata = {
   title: "About Us",
@@ -61,7 +62,7 @@ export default function AboutPage() {
         <div className="mx-auto grid max-w-4xl grid-cols-2">
           <div className="relative aspect-square">
             <Image
-              src="/images/logo_01.png"
+              src={asset("/images/logo_01.png")}
               alt="( SPACE"
               fill
               sizes="(min-width: 896px) 448px, 50vw"
@@ -70,7 +71,7 @@ export default function AboutPage() {
           </div>
           <div className="relative aspect-square">
             <Image
-              src="/images/logo_03.png"
+              src={asset("/images/logo_03.png")}
               alt="and VISUAL )"
               fill
               sizes="(min-width: 896px) 448px, 50vw"

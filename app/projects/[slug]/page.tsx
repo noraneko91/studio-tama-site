@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ViewTransition } from "react";
 import { getProject, projects } from "@/data/projects";
+import ProjectGallery from "../../_components/ProjectGallery";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -44,21 +45,19 @@ export default async function ProjectPage({ params }: Props) {
   ].filter((detail) => detail.value);
 
   return (
-    <main className="flex-1">
-      <div className="px-6 pt-10 md:px-12 md:pt-14">
-        <Link
-          href="/projects"
-          className="group text-xs tracking-[0.25em] text-white/50 transition-colors hover:text-white"
-        >
-          <span className="inline-block transition-transform group-hover:-translate-x-1">
-            ←
-          </span>{" "}
-          ALL PROJECTS
-        </Link>
-      </div>
-
-      <div className="grid gap-12 px-6 pb-24 pt-10 md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] md:gap-16 md:px-12 md:pb-32">
-        <aside className="md:sticky md:top-32 md:self-start">
+    // overflow-x-clip: 겹쳐진 사진이 화면 밖으로 나가도 가로 스크롤이 생기지 않게
+    <main className="flex-1 overflow-x-clip">
+      <div className="grid gap-12 px-6 pb-16 pt-10 md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] md:gap-16 md:px-12 md:pb-20">
+        <aside>
+          <Link
+            href="/projects"
+            className="group mb-10 inline-block text-xs tracking-[0.25em] text-white/50 transition-colors hover:text-white"
+          >
+            <span className="inline-block transition-transform group-hover:-translate-x-1">
+              ←
+            </span>{" "}
+            ALL PROJECTS
+          </Link>
           <p className="mb-4 text-[11px] font-medium tracking-[0.35em] text-white/40">
             {String(index + 1).padStart(2, "0")} — {project.category}
           </p>
@@ -84,32 +83,12 @@ export default async function ProjectPage({ params }: Props) {
           </dl>
         </aside>
 
-        <div className="flex flex-col gap-4 md:gap-6">
-          <ViewTransition name={`project-${project.slug}`} share="project-morph">
-            <div className="relative aspect-[4/5] overflow-hidden bg-white/5">
-              <Image
-                src={project.cover.src}
-                alt={project.title}
-                fill
-                preload
-                sizes="(min-width: 768px) 58vw, 100vw"
-                className="object-cover"
-              />
-            </div>
-          </ViewTransition>
-
-          {project.images.map((image, i) => (
-            <Image
-              key={image.src}
-              src={image.src}
-              alt={`${project.title} ${i + 2}`}
-              width={image.width}
-              height={image.height}
-              sizes="(min-width: 768px) 58vw, 100vw"
-              className="reveal h-auto w-full bg-white/5"
-            />
-          ))}
-        </div>
+        {/* 사진: 휠·스와이프로 책장처럼 넘겨 봐요 */}
+        <ProjectGallery
+          images={[project.cover, ...project.images]}
+          title={project.title}
+          transitionName={`project-${project.slug}`}
+        />
       </div>
 
       {/* 다음 프로젝트 */}

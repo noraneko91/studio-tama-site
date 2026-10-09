@@ -1,32 +1,76 @@
-import { Cormorant_Garamond } from "next/font/google";
-import Image from "next/image";
+import type { Metadata } from "next";
+import { site } from "@/data/site";
+import ContactForm from "../_components/ContactForm";
+import InstagramIcon from "../_components/InstagramIcon";
 
-const cormorant = Cormorant_Garamond({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
-});
+export const metadata: Metadata = {
+  title: "Contact",
+};
 
-export default function AboutPage() {
+export default function ContactPage() {
   return (
-    <main className="min-h-screen bg-[#0b0b0b] px-8 py-32 text-white md:px-20">
-      <header className="fixed left-0 top-0 z-50 flex w-full items-center justify-between px-6 py-5 mix-blend-difference md:px-12">
-        <div
-          className={`${cormorant.className} text-3xl tracking-[0.2em] text-white`}
-        >
-          <a href="/">Studio Tama</a>
-        </div>
+    <main className="flex-1 bg-ink text-white">
+      <section className="px-6 pb-24 pt-16 md:px-12 md:pb-32 md:pt-24">
+        <p className="rise mb-4 text-[11px] font-medium tracking-[0.35em] text-white/40">
+          CONTACT
+        </p>
+        <h1 className="rise font-display text-6xl font-light leading-[0.95] tracking-[-0.03em] [animation-delay:100ms] md:text-[120px]">
+          Let’s talk about
+          <br />
+          <span className="italic">your space.</span>
+        </h1>
 
-        <nav className="hidden gap-8 text-xs font-medium tracking-[0.25em] text-white md:flex">
-          <a href="/about">ABOUT</a>
-          <a href="/projects">PROJECTS</a>
-          <a href="/service">SERVICE</a>
-          <a href="/contact">CONTACT</a>
-        </nav>
-      </header>
-      <p className="mb-6 text-sm tracking-[0.4em] text-white/40">CONTACT</p>
-      <h1 className="text-6xl font-light tracking-[-0.05em] md:text-8xl">
-        contact Studio Tama
-      </h1>
+        <div className="rise mt-20 grid gap-16 border-t border-white/15 pt-12 [animation-delay:250ms] md:grid-cols-2">
+          <div className="space-y-10">
+            <div>
+              <p className="mb-3 text-[11px] tracking-[0.3em] text-white/40">
+                EMAIL
+              </p>
+              <a
+                href={`mailto:${site.email}`}
+                className="font-display text-4xl transition-colors hover:text-white/60 md:text-5xl"
+              >
+                {site.email}
+              </a>
+            </div>
+            <div>
+              <p className="mb-3 text-[11px] tracking-[0.3em] text-white/40">
+                INSTAGRAM
+              </p>
+              <a
+                href={site.instagram.url}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-4 font-display text-4xl transition-colors hover:text-white/60 md:text-5xl"
+              >
+                <InstagramIcon className="h-8 w-8 md:h-10 md:w-10" />
+                {site.instagram.handle}
+              </a>
+              <p className="mt-2 text-sm text-white/50">
+                DM으로도 문의하실 수 있어요.
+              </p>
+            </div>
+            <div>
+              <p className="mb-3 text-[11px] tracking-[0.3em] text-white/40">
+                LOCATION
+              </p>
+              <p className="font-display text-4xl md:text-5xl">
+                {site.location}
+              </p>
+            </div>
+          </div>
+
+          <div>
+            <p className="mb-3 text-[11px] tracking-[0.3em] text-white/40">
+              PROJECT INQUIRY
+            </p>
+            <p className="mb-10 text-sm leading-7 text-white/60">
+              문의 내용을 남겨주시면 확인 후 연락드리겠습니다.
+            </p>
+            <ContactForm />
+          </div>
+        </div>
+      </section>
     </main>
   );
 }

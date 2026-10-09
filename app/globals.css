@@ -1,26 +1,241 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* 사이트 기본: 검정 배경 + 흰 글자 */
+  --background: #000000;
+  --foreground: #ffffff;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-ink: #000000;
+  /* 글씨체: 영어는 Cormorant Garamond, 한글은 Pretendard로 통일
+     (Cormorant에는 한글이 없어서 한글 글자는 자동으로 Pretendard로 표시돼요) */
+  --font-serif: var(--font-cormorant), "Pretendard Variable", sans-serif;
+  --font-display: var(--font-cormorant), "Pretendard Variable", sans-serif;
+  /* 인트로의 TA(m*)A 글자 전용 */
+  --font-logo: var(--font-geist), sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-padding-top: 5rem;
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  /* 한글이 단어 중간에서 줄바꿈되지 않게 */
+  word-break: keep-all;
+  /* Cormorant(영어)는 같은 크기에서 작아 보여서, 한글과 크기감을 맞춤 */
+  font-size-adjust: 0.5;
+}
+
+/* 큰 제목은 디자인한 크기 그대로 */
+.font-display {
+  font-size-adjust: none;
+}
+
+::selection {
+  background: #ffffff;
+  color: #000000;
+}
+
+/* ---------- 첫 화면 등장 애니메이션 ---------- */
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.rise {
+  animation: rise 900ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+/* ---------- 메인 인트로 (app/_components/Intro.tsx) ---------- */
+
+/* 인트로가 끝났으면 숨김 */
+html[data-intro="done"] .intro-overlay {
+  display: none;
+}
+
+/* 인트로 재생 중에는 스크롤을 막고, 첫 화면 글자 애니메이션은 인트로가 걷힐 때 시작 */
+html[data-intro="playing"] {
+  overflow: hidden;
+}
+html[data-intro="playing"] .rise {
+  animation-play-state: paused;
+}
+
+/* 글자가 흐릿하게 아래에서 떠오름 */
+@keyframes intro-char {
+  from {
+    opacity: 0;
+    transform: translateY(0.35em);
+    filter: blur(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: blur(0);
+  }
+}
+.intro-char {
+  animation: intro-char 900ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+/* 별(*)이 빙글 돌며 내려앉고, 빛이 번쩍 */
+@keyframes intro-star {
+  0% {
+    opacity: 0;
+    transform: translateY(-1.6em) rotate(-300deg) scale(0.4);
+  }
+  70% {
+    opacity: 1;
+    transform: translateY(0.06em) rotate(12deg) scale(1.15);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes intro-glow {
+  30% {
+    text-shadow:
+      0 0 0.3em #fff,
+      0 0 0.9em #fff;
+  }
+}
+.intro-star {
+  animation:
+    intro-star 900ms cubic-bezier(0.2, 0.7, 0.2, 1) 650ms both,
+    intro-glow 900ms ease-out 1300ms both;
+}
+
+@keyframes intro-flash {
+  from {
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.14;
+  }
+  to {
+    opacity: 0;
+  }
+}
+.intro-flash {
+  animation: intro-flash 800ms ease-out 1300ms both;
+}
+
+@keyframes intro-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.intro-fade {
+  animation: intro-fade 800ms ease 300ms both;
+}
+
+/* 끝날 때: 로고는 위로 사라지고, 검은 화면이 커튼처럼 위로 걷힘 */
+@keyframes intro-curtain {
+  from {
+    clip-path: inset(0 0 0 0);
+  }
+  to {
+    clip-path: inset(0 0 100% 0);
+  }
+}
+.intro-leave {
+  animation: intro-curtain 1000ms cubic-bezier(0.76, 0, 0.24, 1) both;
+}
+
+@keyframes intro-logo-out {
+  to {
+    opacity: 0;
+    transform: translateY(-0.15em);
+  }
+}
+.intro-leave .intro-logo {
+  animation: intro-logo-out 600ms cubic-bezier(0.76, 0, 0.24, 1) both;
+}
+
+/* ---------- 스크롤하면 아래에서 올라오는 효과 (지원하는 브라우저에서만) ---------- */
+
+@supports (animation-timeline: view()) {
+  .reveal {
+    animation: rise linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 35%;
+  }
+}
+
+/* ---------- 페이지 전환 ---------- */
+
+/* 헤더는 전환 중에도 움직이지 않게 고정 */
+.site-header {
+  view-transition-name: site-header;
+}
+::view-transition-group(site-header) {
+  animation: none;
+  z-index: 100;
+}
+::view-transition-old(site-header) {
+  display: none;
+}
+::view-transition-new(site-header) {
+  animation: none;
+}
+
+/* 나가는 페이지는 빠르게 사라지고, 들어오는 페이지는 살짝 올라오며 나타남 */
+::view-transition-old(.page-exit) {
+  animation: 180ms ease-in both fade-out;
+}
+::view-transition-new(.page-enter) {
+  animation: 500ms cubic-bezier(0.2, 0.7, 0.2, 1) 120ms both rise-in;
+}
+
+/* 프로젝트 카드 이미지 → 상세 페이지 대표 이미지로 이어지는 효과 */
+::view-transition-group(.project-morph) {
+  animation-duration: 550ms;
+  animation-timing-function: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+@keyframes fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* 움직임 줄이기 설정을 켠 사용자에게는 애니메이션을 끔 */
+@media (prefers-reduced-motion: reduce) {
+  .rise,
+  .reveal {
+    animation: none;
+  }
+  ::view-transition-old(*),
+  ::view-transition-new(*),
+  ::view-transition-group(*) {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+  }
 }

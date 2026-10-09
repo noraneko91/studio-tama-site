@@ -1,205 +1,171 @@
-import { Cormorant_Garamond } from "next/font/google";
 import Image from "next/image";
+import Link from "next/link";
+import { projects } from "@/data/projects";
+import { services } from "@/data/site";
+import Intro from "./_components/Intro";
+import ProjectCard from "./_components/ProjectCard";
 
-const cormorant = Cormorant_Garamond({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
-});
-
-const projects = [
-  {
-    category: "Retail",
-    title: "MUSINSA",
-    description: "브랜드의 무드와 동선을 구조적으로 담아낸 리테일 공간.",
-    image: "/images/project-musinsa-04.png",
-  },
-  {
-    category: "Commercial",
-    title: "KOMU",
-    description: "차분한 톤과 절제된 소재감이 중심이 되는 상업 공간.",
-    image: "/images/project-KOMU-02.png",
-  },
-  {
-    category: "Brand",
-    title: "Verish",
-    description: "공간의 첫인상을 만드는 브랜드 비주얼과 아이덴티티.",
-    image: "/images/project-Verish-07.png",
-  },
-];
+const featured = projects.slice(0, 3);
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-[#0b0b0b] text-white">
-      <header className="fixed left-0 top-0 z-50 flex w-full items-center justify-between px-6 py-5 mix-blend-difference md:px-12">
-        <div
-          className={`${cormorant.className} text-3xl tracking-[0.2em] text-white`}
-        >
-          <a href="/">Studio Tama</a>
-        </div>
+    <main className="flex-1">
+      {/* 처음 들어올 때 나오는 인트로 */}
+      <Intro />
 
-        <nav className="hidden gap-8 text-xs font-medium tracking-[0.25em] text-white md:flex">
-          <a href="/about">ABOUT</a>
-          <a href="/projects">PROJECTS</a>
-          <a href="/service">SERVICE</a>
-          <a href="/contact">CONTACT</a>
-        </nav>
-      </header>
-
-      <section className="relative min-h-screen bg-[#0b0b0b] text-white">
-        <div className="mx-auto grid min-h-screen max-w-[1600px] grid-cols-1 md:grid-cols-2">
-          <div className="flex flex-col justify-center px-8 py-24 md:px-20">
-            <p className="mb-8 text-sm tracking-[0.4em] text-white/40">
-              INTERIOR DESIGN STUDIO
-            </p>
-
-            <h1
-              className={`${cormorant.className} mb-8 text-[72px] leading-[0.9] tracking-[-0.05em] md:text-[120px]`}
-            >
-              Designing
-              <br />
-              spaces
-              <br />
-              with mood.
-            </h1>
-
-            <p className="mb-10 max-w-md text-sm leading-8 text-white/60">
-              공간의 구조와 분위기를 설계합니다. 단순한 인테리어가 아닌 브랜드
-              경험을 만듭니다.
-            </p>
-
-            <div className="flex gap-4">
-              <a
-                href="#projects"
-                className="border border-white/20 px-8 py-4 text-sm tracking-[0.2em] transition hover:bg-white hover:text-black"
-              >
-                PROJECTS
-              </a>
-
-              <a
-                href="#contact"
-                className="border border-white/20 px-8 py-4 text-sm tracking-[0.2em] transition hover:bg-white hover:text-black"
-              >
-                CONTACT
-              </a>
+      {/* 첫 화면 */}
+      <section className="bg-ink text-white">
+        <div className="grid min-h-[calc(100svh-5rem)] grid-cols-1 md:grid-cols-2">
+          <div className="flex flex-col justify-end px-6 pb-12 pt-16 md:px-12 md:pb-16 md:pt-24">
+            <div>
+              <h1 className="font-display text-[64px] font-light leading-[0.9] tracking-[-0.03em] md:text-[112px]">
+                <span className="rise block [animation-delay:100ms]">
+                  a flash of
+                </span>
+                <span className="rise block italic [animation-delay:250ms]">
+                  creativity
+                </span>
+              </h1>
+              <p className="rise mt-10 max-w-md text-sm leading-7 text-white/60 [animation-delay:450ms]">
+                STUDIO TAMA는 서울을 기반으로 상업 공간을 디자인하는
+                스튜디오입니다. 브랜드가 가진 이야기를 공간과 비주얼로
+                풀어냅니다.
+              </p>
             </div>
           </div>
 
-          <div className="relative h-[100vh]">
+          <div className="relative min-h-[60vh] border-white/10 md:border-l">
             <Image
               src="/images/logo_02.png"
-              alt="Studio Tama"
+              alt="STUDIO TAMA 로고"
               fill
-              priority
-              className="object-cover grayscale"
+              preload
+              sizes="(min-width: 768px) 50vw, 100vw"
+              className="object-contain"
             />
           </div>
         </div>
       </section>
 
-      <section id="about" className="px-6 py-24 md:px-12">
-        <div className="grid gap-10 border-t border-white/20 pt-10 md:grid-cols-[0.4fr_1fr]">
-          <p className="text-xs font-medium tracking-[0.35em] text-black/50">
-            ABOUT
-          </p>
+      {/* 대표 프로젝트 */}
+      <section className="border-t border-white/10 px-6 py-24 md:px-12 md:py-32">
+        <div className="mb-16 flex items-end justify-between gap-6">
+          <div>
+            <p className="mb-4 text-[11px] font-medium tracking-[0.35em] text-white/40">
+              SELECTED PROJECTS
+            </p>
+            <h2 className="font-display text-5xl font-light tracking-[-0.03em] md:text-7xl">
+              Recent Works
+            </h2>
+          </div>
+          <Link
+            href="/projects"
+            className="group hidden shrink-0 text-xs tracking-[0.25em] md:block"
+          >
+            ALL PROJECTS{" "}
+            <span className="inline-block transition-transform group-hover:translate-x-1">
+              →
+            </span>
+          </Link>
+        </div>
 
-          <h2 className="max-w-4xl text-3xl font-medium leading-tight tracking-[-0.04em] md:text-5xl">
-            우리는 단순히 예쁜 공간이 아니라, 머무는 이유가 생기는 공간을
-            만듭니다.
-          </h2>
+        <div className="grid gap-x-8 gap-y-20 md:grid-cols-3">
+          {featured.map((project, index) => (
+            <div
+              key={project.slug}
+              className={`reveal ${index === 1 ? "md:mt-24" : ""}`}
+            >
+              <ProjectCard project={project} index={index} />
+            </div>
+          ))}
+        </div>
+
+        <Link
+          href="/projects"
+          className="mt-16 block border border-white/30 py-5 text-center text-xs tracking-[0.25em] md:hidden"
+        >
+          ALL PROJECTS →
+        </Link>
+      </section>
+
+      {/* 스튜디오 소개 */}
+      <section className="px-6 pb-24 md:px-12 md:pb-32">
+        <div className="grid gap-10 border-t border-white/10 pt-12 md:grid-cols-[1fr_2fr]">
+          <p className="text-[11px] font-medium tracking-[0.35em] text-white/40">
+            STUDIO
+          </p>
+          <div className="reveal">
+            <h2 className="text-3xl font-medium leading-snug tracking-[-0.03em] md:text-5xl md:leading-tight">
+              우리는 단순히 예쁜 공간이 아니라,
+              <br className="hidden md:block" /> 머무는 이유가 생기는 공간을
+              만듭니다.
+            </h2>
+            <Link
+              href="/about"
+              className="group mt-10 inline-block text-xs tracking-[0.25em]"
+            >
+              ABOUT THE STUDIO{" "}
+              <span className="inline-block transition-transform group-hover:translate-x-1">
+                →
+              </span>
+            </Link>
+          </div>
         </div>
       </section>
 
-      <section id="projects" className="px-6 py-24 md:px-12">
-        <div className="mb-10 flex items-end justify-between border-t border-white/20 pt-10">
+      {/* 서비스 */}
+      <section className="border-t border-white/10 bg-ink px-6 py-24 text-white md:px-12 md:py-32">
+        <div className="mb-16 flex items-end justify-between gap-6">
           <div>
-            <p className="mb-4 text-xs font-medium tracking-[0.35em] text-white/50">
-              PROJECTS
+            <p className="mb-4 text-[11px] font-medium tracking-[0.35em] text-white/40">
+              SERVICES
             </p>
-            <h2 className="text-4xl font-light tracking-[-0.05em] md:text-6xl">
-              Selected Works
+            <h2 className="font-display text-5xl font-light tracking-[-0.03em] md:text-7xl">
+              What we do
             </h2>
           </div>
+          <Link
+            href="/services"
+            className="group hidden shrink-0 text-xs tracking-[0.25em] md:block"
+          >
+            ALL SERVICES{" "}
+            <span className="inline-block transition-transform group-hover:translate-x-1">
+              →
+            </span>
+          </Link>
         </div>
 
-        <div className="grid gap-5 md:grid-cols-3">
-          {projects.map((project, index) => (
-            <article key={project.title} className="group cursor-pointer">
-              <div className="relative mb-5 h-[520px] overflow-hidden bg-[#1a1a1a]">
-                <Image
-                  src={project.image}
-                  alt={project.title}
-                  fill
-                  className="object-cover grayscale transition duration-700 group-hover:scale-105 group-hover:grayscale-0"
-                />
-
-                <div className="absolute inset-0 bg-white/20" />
-
-                <span className="absolute bottom-6 left-6 text-[96px] font-light leading-none tracking-[-0.08em] text-white/30">
-                  0{index + 1}
-                </span>
+        <div className="border-t border-white/15">
+          {services.map((service, index) => (
+            <div
+              key={service.title}
+              className="reveal grid gap-3 border-b border-white/15 py-8 md:grid-cols-[80px_1.2fr_1fr] md:items-baseline md:gap-8"
+            >
+              <span className="text-xs text-white/40">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <div>
+                <h3 className="font-display text-3xl md:text-4xl">
+                  {service.title}
+                </h3>
+                <p className="mt-1 text-sm text-white/50">{service.ko}</p>
               </div>
-
-              <p className="mb-2 text-xs font-medium tracking-[0.3em] text-white/40">
-                {project.category}
+              <p className="text-sm leading-7 text-white/60">
+                {service.description}
               </p>
-              <h3 className="mb-2 text-2xl font-medium tracking-[-0.03em]">
-                {project.title}
-              </h3>
-              <p className="text-sm leading-6 text-white/60">
-                {project.description}
-              </p>
-            </article>
+            </div>
           ))}
         </div>
       </section>
 
-      <section id="service" className="px-6 py-24 md:px-12">
-        <div className="grid gap-10 border-t border-white/20 pt-10 md:grid-cols-[0.4fr_1fr]">
-          <p className="text-xs font-medium tracking-[0.35em] text-black/50">
-            SERVICE
-          </p>
-
-          <div className="grid gap-6 md:grid-cols-3">
-            {["Interior Design", "Space Branding", "Renovation"].map(
-              (service) => (
-                <div key={service} className="border-t border-white/20 pt-5">
-                  <h3 className="mb-4 text-2xl font-medium tracking-[-0.03em]">
-                    {service}
-                  </h3>
-                  <p className="text-sm leading-6 text-white/60">
-                    기획부터 디자인, 시공 방향 제안까지 공간에 맞는 솔루션을
-                    제공합니다.
-                  </p>
-                </div>
-              ),
-            )}
-          </div>
-        </div>
+      {/* 문의 유도 */}
+      <section className="border-t border-white/10 px-6 py-24 md:px-12 md:py-32">
+        <h2 className="reveal font-display text-5xl font-light leading-[0.95] tracking-[-0.03em] md:text-8xl">
+          Let’s make
+          <br />
+          <span className="italic">your space</span> different.
+        </h2>
       </section>
-
-      <section id="contact" className="px-6 py-24 md:px-12">
-        <div className="rounded-[32px] bg-black px-6 py-16 text-white md:px-12 md:py-24">
-          <p className="mb-6 text-xs font-medium tracking-[0.35em] text-white/50">
-            CONTACT
-          </p>
-
-          <h2 className="mb-8 max-w-4xl text-4xl font-light leading-tight tracking-[-0.05em] md:text-7xl">
-            Let’s make your space different.
-          </h2>
-
-          <a
-            href="mailto:hello@studiotama.com"
-            className="inline-flex rounded-full bg-white px-6 py-3 text-sm font-medium text-black transition hover:bg-white/80"
-          >
-            hello@studiotama.com
-          </a>
-        </div>
-      </section>
-
-      <footer className="flex flex-col gap-4 px-6 py-8 text-xs text-black/50 md:flex-row md:items-center md:justify-between md:px-12">
-        <p>© STUDIO TAMA</p>
-        <p>Interior Design & Space Branding</p>
-      </footer>
     </main>
   );
 }
